@@ -1,5 +1,6 @@
 package com.library.service;
 
+import com.library.enums.Status;
 import com.library.model.Book;
 import com.library.model.Reader;
 
@@ -8,8 +9,8 @@ import java.util.*;
 public class Library {
     private static Library instance;
 
-    private Map<Long, Book> books = new HashMap<>(); // bookId -> Book
-    private Map<String, Reader> readers = new HashMap<>(); // readerName -> Reader
+    private Map<Long, Book> books = new HashMap<>();
+    private Map<Long, Reader> readers = new HashMap<>();
 
     private Library() {
     }
@@ -30,6 +31,15 @@ public class Library {
         return readers.values();
     }
 
+    // Reader ID'ye göre getir
+    public Reader getReader(Long id) {
+        return readers.get(id);
+    }
+    public void addReader(Reader reader) {
+        this.readers.put(reader.getId(), reader);
+    }
+
+
     // Yeni kitap ekleme
     public boolean newBook(Book book){
         if(books.containsKey(book.getId())){
@@ -46,7 +56,7 @@ public class Library {
     }
 
     // Kitap ödünç verme
-    /*public boolean lendBook(Long bookId, Long readerId) {
+    public boolean lendBook(Long bookId, Long readerId) {
         Book book = books.get(bookId);
         Reader reader = readers.get(readerId);
 
@@ -55,19 +65,44 @@ public class Library {
             return false;
         }
 
-        if (book.getStatus()=="") {
+        if (book.getStatus()== Status.BORROWED) {
             System.out.println("Kitap zaten ödünç alınmış.");
             return false;
         }
 
-        if (reader.().size() >= 5) {
+        if (reader.getBooks().size() >= 5) {
             System.out.println("Kullanıcı kitap limitine ulaşmış.");
             return false;
         }
 
         reader.borrowBook(book);
-        book.setBorrowed(true);
+        book.update_status(Status.BORROWED);
         book.change_owner(readerId);
         return true;
-    }*/
+    }
+
+    // Kitap iade etme
+    public boolean takeBackBook(Long bookId, Long readerId) {
+        Book book = books.get(bookId);
+        Reader reader = readers.get(readerId);
+
+        if (book == null || reader == null) {
+            System.out.println("Kitap veya kullanıcı bulunamadı.");
+            return false;
+        }
+
+        if (!reader.getBooks().contains(book)) {
+            System.out.println("Bu kitap kullanıcıya ait değil.");
+            return false;
+        }
+
+        reader.returnBook(book);
+        book.update_status(Status.AVAILABLE);
+        book.change_owner(null);
+        System.out.println("Kitap başarıyla iade edildi.");
+        return true;
+    }
+
+
+
 }

@@ -56,8 +56,8 @@ public class Librarian {
     public double calculate_fine(Book book, LocalDateTime returnDate) {
         LocalDateTime purchaseDate = book.getDateOfPurchase();
         long daysBetween = Duration.between(purchaseDate, returnDate).toDays();
-        long delay = daysBetween - 15; // örnek: 15 gün içinde iade bekleniyor
-        double finePerDay = 5.0; // örnek gecikme bedeli (₺)
+        long delay = daysBetween - 15; //15 gün içinde iade bekleniyor
+        double finePerDay = 5.0; //gecikme bedeli
         return delay > 0 ? delay * finePerDay : 0.0;
     }
 

@@ -2,28 +2,32 @@ package com.library.model;
 import com.library.enums.Status;
 import com.library.exception.BookNotFound;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class Reader extends Person{
 
-    private List<Book> books;
+    private Set<Book> books;
     private double total_amount;
 
     private static final int MAX_BOOK_LIMIT = 5;
 
-    public Reader(Long id, String name, List<Book> books, double total_amount) {
+    public Reader(Long id, String name, Set<Book> books, double total_amount) {
         super(id, name);
-        this.books = new ArrayList<>();
-        this.total_amount = 0.0;
+        this.books = new HashSet<>();
+        this.total_amount = total_amount;
     }
     //Getter
-    public List<Book> getBooks() {
+    public Set<Book> getBooks() {
         return books;
     }
 
     public double getTotal_amount() {
         return total_amount;
     }
+
+
 
     //Kitap ödünç alma
     public void borrowBook(Book book) {
@@ -56,7 +60,7 @@ public class Reader extends Person{
         book.update_status(Status.AVAILABLE);
         book.change_owner(null);
         total_amount -= book.getPrice();
-        System.out.println(book.get_title() + " kitabı iade edildi.");
+
     }
     //Kitapları listeler
     public void showBooks() {
@@ -80,9 +84,10 @@ public class Reader extends Person{
     public String toString() {
         return "Reader{" +
                 "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", books=" + books.size() +
-                ", total=" + total_amount +
+                ", isim='" + getName() + '\'' +
+                ", ödünç kitap sayısı=" + books.size() +
+                ", toplam tutar=" + total_amount +
                 '}';
     }
+
 }

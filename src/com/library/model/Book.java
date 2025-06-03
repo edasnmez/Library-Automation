@@ -61,14 +61,16 @@ public class Book {
         return ownerId;
     }
 
-
-
-    public void updateBookInfo(String name, Author author, double price, String edition) {
+    public void setName(String name) {
         this.name = name;
-        this.author = author;
+    }
+
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setEdition(String edition) {
         this.edition = edition;
-        System.out.println("Kitap bilgileri güncellendi.");
     }
 
     @Override
@@ -78,7 +80,7 @@ public class Book {
                 ", Ad='" + name + '\'' +
                 ", Yazar=" + author.getName() +
                 ", Fiyat=" + price +
-                ", Baskı='" + edition + '\'' +
+                ", Kategori='" + edition + '\'' +
                 ", Durum='" + status + '\'' +
                 ", Sahip=" + (ownerId != null ? ownerId : "Kütüphane") +
                 ", Alım Tarihi=" + dateOfPurchase +
@@ -104,4 +106,18 @@ public class Book {
     public void update_status(Status newStatus) {
         this.status = newStatus;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return id != null && id.equals(book.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }

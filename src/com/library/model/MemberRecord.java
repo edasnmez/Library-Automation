@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class MemberRecord {
     private Long memberId;
-    private String type; // Örn: "Student", "Teacher" gibi
+    private String type;
     private LocalDate dateOfMembership;
     private int noBooksIssued;
     private final int maxBookLimit;
@@ -51,7 +51,7 @@ public class MemberRecord {
         System.out.println(name + " adlı üye " + amount + "₺ tutarında ödeme yaptı.");
     }
 
-    //getter
+    // Getter
 
     public Long getMemberId() {
         return memberId;
